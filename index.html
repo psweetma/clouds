@@ -23,11 +23,16 @@
     margin:0;
     font-family:'Inter',sans-serif;
     color:var(--ink);
-    background:linear-gradient(180deg,var(--sky-deep) 0%, var(--sky-mid) 32%, var(--sky-pale) 62%, var(--sky-white) 100%);
-    background-attachment:fixed;
+    background:var(--sky-white);
+  }
+
+  .skyband{
+    background:linear-gradient(180deg,var(--sky-deep) 0%, var(--sky-mid) 75%, var(--sky-pale) 100%);
+    padding-bottom:40px;
   }
 
   .wrap{max-width:920px;margin:0 auto;padding:48px 24px 100px;}
+  .skyband .wrap{padding-bottom:0;}
 
   /* ---------- HERO ---------- */
   .hero{text-align:center;color:#fff;margin-bottom:8px;}
@@ -114,6 +119,20 @@
   }
   @media(max-width:640px){.grid4{grid-template-columns:1fr;}}
 
+  .alto-note{
+    display:grid;
+    grid-template-columns:90px 1fr;
+    gap:18px;align-items:center;
+    background:#fff8ec;
+    border:1px solid #f2d9ad;
+    border-radius:16px;
+    padding:18px 22px;
+    margin-top:18px;
+  }
+  .alto-note .card-icon{width:76px;height:52px;}
+  .alto-note .card-name{margin:0 0 6px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .alto-note .desc{margin:0;}
+
   .card{
     background:var(--card);
     border:1px solid var(--hairline);
@@ -140,8 +159,7 @@
   }
   .desc{font-size:14.5px;line-height:1.55;color:var(--ink-soft);margin:0;}
 
-  details{margin-top:12px;border-top:1px dashed var(--hairline);padding-top:10px;}
-  summary{
+  details{margin-top:12px;border-top:1px dashed var(--hairline);padding-top:10px;}  summary{
     cursor:pointer;
     font-family:'IBM Plex Mono',monospace;
     font-size:11px;letter-spacing:.06em;text-transform:uppercase;
@@ -197,12 +215,13 @@
 </style>
 </head>
 <body>
+<div class="skyband">
 <div class="wrap">
 
   <div class="hero">
     <p class="eyebrow">A field guide to what's over your head</p>
     <h1>Clouds, decoded</h1>
-    <p class="sub">Every cloud in the sky is built from just four Latin words describing its shape and height. Learn those four, and the ten official cloud types basically name themselves.</p>
+    <p class="sub">Every cloud in the sky is named using a handful of Latin words describing its shape, its height, and whether it's raining. Learn those words, and the ten official cloud types basically name themselves.</p>
   </div>
 
   <div class="atmos">
@@ -240,11 +259,16 @@
     </div>
   </div>
 
+</div>
+</div>
+
+  <div class="wrap">
+
   <section class="block">
     <div class="block-head">
       <p class="block-kicker">Part one</p>
-      <h2>The four building blocks</h2>
-      <p class="block-desc">Meteorologists describe every cloud using combinations of these four root words. Learn what each one looks like and means, and you're most of the way to naming any cloud you see.</p>
+      <h2>The four core cloud shapes</h2>
+      <p class="block-desc">Meteorologists describe almost every cloud using combinations of these four shape words. Learn what each one looks like and means, and you're most of the way to naming any cloud you see.</p>
     </div>
 
     <div class="grid4">
@@ -310,13 +334,21 @@
       </div>
 
     </div>
+
+    <div class="alto-note">
+      <div class="card-icon" id="icon-alto-note"></div>
+      <div>
+        <p class="card-name">Alto <span class="latin">alto- = "high"</span></p>
+        <p class="desc">One more word worth knowing before Part two: unlike the four above, <b>alto-</b> doesn't describe a shape — it describes height. It marks a cloud as sitting in the <b>middle</b> layer of the sky (roughly 2,000–6,000m), so you'll see it combined with cumulo- and strato- below.</p>
+      </div>
+    </div>
   </section>
 
   <section class="block">
     <div class="block-head">
       <p class="block-kicker">Part two</p>
       <h2>The ten official cloud genera</h2>
-      <p class="block-desc">Weather scientists group almost every cloud in the sky into ten "genera". Most are simply two of the four building blocks stuck together — the name tells you the shape and the height at once.</p>
+      <p class="block-desc">Weather scientists group almost every cloud in the sky into ten "genera". Nine of the ten are simply two of the five words above stuck together — the name tells you the shape and the height at once.</p>
     </div>
 
     <div id="genus-list"></div>
@@ -436,6 +468,16 @@ document.getElementById('icon-cirrus-big').innerHTML = cloudSVG('cirrus');
 document.getElementById('icon-cumulus-big').innerHTML = cloudSVG('cumulus');
 document.getElementById('icon-stratus-big').innerHTML = cloudSVG('stratus');
 document.getElementById('icon-nimbus-big').innerHTML = cloudSVG('cumulonimbus');
+document.getElementById('icon-alto-note').innerHTML = `
+  <svg viewBox="0 0 100 68" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="68" rx="10" fill="#5b81a3"/>
+    <line x1="14" y1="8" x2="14" y2="60" stroke="#ffffff" stroke-width="2" opacity="0.7"/>
+    <line x1="10" y1="8" x2="18" y2="8" stroke="#ffffff" stroke-width="2" opacity="0.7"/>
+    <line x1="10" y1="60" x2="18" y2="60" stroke="#ffffff" stroke-width="2" opacity="0.7"/>
+    <rect x="26" y="24" width="60" height="20" rx="6" fill="#ffffff" opacity="0.22"/>
+    <rect x="26" y="24" width="60" height="20" rx="6" fill="none" stroke="#ffffff" stroke-width="1.6"/>
+    <text x="56" y="38" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#ffffff">HIGH</text>
+  </svg>`;
 
 /* ---------- Ten genera data ---------- */
 const genera = [
