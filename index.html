@@ -209,6 +209,62 @@
   }
   .genus-desc{font-size:14px;line-height:1.5;color:var(--ink-soft);margin:0;}
 
+  /* ---------- MEMORY TRICKS ---------- */
+  .tips{
+    margin:0 0 28px;padding-left:22px;
+    font-size:15px;line-height:1.65;color:var(--ink-soft);
+  }
+  .tips li{margin-bottom:10px;}
+  .tips b{color:var(--ink);}
+
+  .mnemonic-wrap{
+    background:var(--card);
+    border:1px solid var(--hairline);
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 8px 24px -16px rgba(22,35,63,0.25);
+  }
+  .mnemonic-table{
+    width:100%;border-collapse:collapse;
+    font-size:14px;
+  }
+  .mnemonic-table th, .mnemonic-table td{
+    padding:12px 10px;text-align:left;
+    border-bottom:1px solid var(--hairline);
+  }
+  .mnemonic-table thead th{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--sky-mid);font-weight:600;
+  }
+  .mnemonic-table thead th span{
+    display:block;font-size:10px;text-transform:none;
+    letter-spacing:0;color:var(--ink-soft);font-weight:400;
+  }
+  .mnemonic-table td.row-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--gold);font-weight:600;
+    white-space:nowrap;
+  }
+  .mnemonic-table td.row-label span{
+    display:block;font-size:11px;color:var(--ink-soft);font-weight:400;
+  }
+  .mnemonic-table td{color:var(--ink);font-weight:500;}
+  .mnemonic-table td.muted{color:var(--ink-soft);font-weight:400;font-style:italic;font-size:13px;}
+  .mnemonic-table td.odd-one-out{
+    background:#fff8ec;font-weight:600;
+    border-radius:8px;
+  }
+  .mnemonic-table td.odd-one-out span{
+    display:block;font-size:11.5px;font-weight:400;color:var(--ink-soft);
+  }
+  .mnemonic-table tbody tr:last-child td{border-bottom:none;}
+  .mnemonic-footnote{
+    font-size:13px;color:var(--ink-soft);line-height:1.5;
+    margin:16px 0 0;padding-top:14px;
+    border-top:1px dashed var(--hairline);
+  }
+
   footer{
     text-align:center;font-size:22px;
     margin-top:20px;letter-spacing:.15em;
@@ -234,6 +290,10 @@
 
     .alto-note{grid-template-columns:56px 1fr;gap:12px;padding:14px 16px;}
     .alto-note .card-icon{width:56px;height:38px;}
+
+    .mnemonic-wrap{padding:14px;overflow-x:auto;}
+    .mnemonic-table{font-size:12.5px;}
+    .mnemonic-table th, .mnemonic-table td{padding:9px 6px;}
   }
 </style>
 </head>
@@ -379,6 +439,55 @@
     </div>
 
     <div id="genus-list"></div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <p class="block-kicker">Part three</p>
+      <h2>Memory tricks</h2>
+      <p class="block-desc">Ten names can feel like a lot to hold onto — but the table below shows the pattern that connects almost all of them.</p>
+    </div>
+
+    <ol class="tips">
+      <li><b>High is easy:</b> all three high clouds start with cirro- (or are cirrus itself). If the name starts with "cirr-", it's high.</li>
+      <li><b>Low is just three pieces:</b> cumulus (puffy), stratus (layer), and stratocumulus (the two mixed together).</li>
+      <li><b>Mid mostly mirrors low:</b> stick alto- onto the front of cumulus and stratus and you get altocumulus and altostratus. But the "mixed" slot isn't an alto-combo — it's filled by nimbostratus instead, the thick rain-bearing layer. That's the one exception worth memorising on purpose.</li>
+      <li><b>Cumulonimbus breaks all the rules on its own:</b> it starts as a low cumulus cloud, but keeps growing until it punches through the mid and high layers too.</li>
+    </ol>
+
+    <div class="mnemonic-wrap">
+      <table class="mnemonic-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Puffy<br><span>cumulo-</span></th>
+            <th>Layer<br><span>strato-</span></th>
+            <th>Both mixed together</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-label">High<br><span>cirro-</span></td>
+            <td>Cirrocumulus</td>
+            <td>Cirrostratus</td>
+            <td class="muted">— (cirrus alone covers it)</td>
+          </tr>
+          <tr>
+            <td class="row-label">Mid<br><span>alto-</span></td>
+            <td>Altocumulus</td>
+            <td>Altostratus</td>
+            <td class="odd-one-out">Nimbostratus <span>(breaks the pattern)</span></td>
+          </tr>
+          <tr>
+            <td class="row-label">Low<br><span>no prefix</span></td>
+            <td>Cumulus</td>
+            <td>Stratus</td>
+            <td>Stratocumulus</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="mnemonic-footnote">Cumulonimbus sits outside this table entirely — a low cumulus cloud that grew tall enough to tower through every layer at once.</p>
+    </div>
   </section>
 
   <footer>☁️ ❤️ ⛅</footer>
