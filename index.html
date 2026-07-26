@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Clouds 101</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
@@ -211,6 +212,28 @@
   footer{
     text-align:center;font-size:22px;
     margin-top:20px;letter-spacing:.15em;
+  }
+
+  /* ---------- MOBILE ---------- */
+  @media(max-width:480px){
+    .wrap{padding-left:16px;padding-right:16px;}
+    h1{font-size:32px;}
+    .sub{font-size:15px;}
+
+    .atmos{padding:16px 14px 10px;}
+    .band{flex-direction:column;align-items:flex-start;gap:8px;padding:12px 2px;}
+    .band-label{width:auto;}
+
+    .card{padding:16px;}
+    .card-top{flex-direction:column-reverse;}
+    .card-icon{width:100%;height:56px;}
+
+    .genus-row{grid-template-columns:52px 1fr;gap:12px;padding:14px;}
+    .genus-icon{width:52px;height:36px;}
+    .genus-name{font-size:16px;}
+
+    .alto-note{grid-template-columns:56px 1fr;gap:12px;padding:14px 16px;}
+    .alto-note .card-icon{width:56px;height:38px;}
   }
 </style>
 </head>
