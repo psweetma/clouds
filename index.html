@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Clouds 101</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root{
+    --sky-deep:#16233f;
+    --sky-mid:#3d6a97;
+    --sky-pale:#cfe6f5;
+    --sky-white:#f7fbfd;
+    --gold:#f2a93c;
+    --ink:#16233f;
+    --ink-soft:#4a5b78;
+    --card:#ffffff;
+    --hairline:#d9e6ee;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:linear-gradient(180deg,var(--sky-deep) 0%, var(--sky-mid) 32%, var(--sky-pale) 62%, var(--sky-white) 100%);
+    background-attachment:fixed;
+  }
+
+  .wrap{max-width:920px;margin:0 auto;padding:48px 24px 100px;}
+
+  /* ---------- HERO ---------- */
+  .hero{text-align:center;color:#fff;margin-bottom:8px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);margin:0 0 14px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-size:clamp(36px,6vw,58px);
+    margin:0 0 10px;
+    line-height:1.05;
+  }
+  .sub{
+    font-size:16px;
+    color:var(--sky-pale);
+    max-width:520px;margin:0 auto 36px;
+    line-height:1.5;
+  }
+
+  /* ---------- ATMOSPHERE DIAGRAM ---------- */
+  .atmos{
+    position:relative;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:20px;
+    padding:20px 20px 14px;
+    margin-bottom:56px;
+    backdrop-filter:blur(2px);
+  }
+  .atmos-title{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--sky-pale);opacity:.8;margin:0 0 12px;text-align:left;
+  }
+  .band{
+    display:flex;align-items:center;
+    border-top:1px dashed rgba(255,255,255,0.25);
+    padding:14px 4px;
+    gap:16px;
+  }
+  .band:first-child{border-top:none;}
+  .band-label{
+    width:118px;flex-shrink:0;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;color:var(--gold);
+    line-height:1.4;
+  }
+  .band-label b{display:block;font-size:13px;color:#fff;}
+  .band-clouds{display:flex;flex-wrap:wrap;gap:10px;flex:1;}
+  .chip{
+    display:flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:999px;
+    padding:5px 12px 5px 8px;
+    font-size:12.5px;color:#fff;
+    cursor:default;
+  }
+  .chip svg{width:20px;height:14px;display:block;}
+
+  /* ---------- SECTIONS ---------- */
+  section.block{margin-bottom:54px;}
+  .block-head{margin-bottom:22px;}
+  .block-kicker{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--sky-mid);margin:0 0 6px;
+  }
+  h2{
+    font-family:'Fraunces',serif;
+    font-size:28px;font-weight:600;
+    color:var(--ink);margin:0 0 8px;
+  }
+  .block-desc{color:var(--ink-soft);font-size:15px;line-height:1.55;max-width:640px;margin:0;}
+
+  /* ---------- CORE 4 GRID ---------- */
+  .grid4{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+  }
+  @media(max-width:640px){.grid4{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--hairline);
+    border-radius:16px;
+    padding:22px;
+    box-shadow:0 8px 24px -16px rgba(22,35,63,0.25);
+  }
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;}
+  .card-icon{width:64px;height:44px;flex-shrink:0;}
+  .card-icon svg{width:100%;height:100%;}
+  .card-name{
+    font-family:'Fraunces',serif;font-weight:600;font-size:20px;
+    margin:0 0 4px;
+  }
+  .latin{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    background:var(--sky-pale);
+    color:var(--sky-deep);
+    padding:3px 9px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+  .desc{font-size:14.5px;line-height:1.55;color:var(--ink-soft);margin:0;}
+
+  details{margin-top:12px;border-top:1px dashed var(--hairline);padding-top:10px;}
+  summary{
+    cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--sky-mid);
+    list-style:none;
+    user-select:none;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"+ ";color:var(--gold);font-weight:700;}
+  details[open] summary::before{content:"– ";}
+  .more{
+    font-size:13px;line-height:1.6;color:var(--ink-soft);
+    margin:10px 0 0;
+    padding-left:2px;
+  }
+
+  /* ---------- 10 GENERA LIST ---------- */
+  .genus-row{
+    display:grid;
+    grid-template-columns:76px 1fr;
+    gap:16px;
+    background:var(--card);
+    border:1px solid var(--hairline);
+    border-radius:14px;
+    padding:16px 18px;
+    margin-bottom:12px;
+    box-shadow:0 6px 18px -14px rgba(22,35,63,0.2);
+  }
+  .genus-icon{width:76px;height:52px;}
+  .genus-icon svg{width:100%;height:100%;}
+  .genus-top{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 10px;margin-bottom:4px;}
+  .genus-name{font-family:'Fraunces',serif;font-weight:600;font-size:18px;}
+  .parts{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;color:var(--sky-mid);
+    background:var(--sky-pale);
+    padding:2px 8px;border-radius:999px;
+  }
+  .altitude-tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--gold);
+    border:1px solid #f2d9ad;
+    background:#fff8ec;
+    padding:2px 8px;border-radius:999px;
+  }
+  .genus-desc{font-size:14px;line-height:1.5;color:var(--ink-soft);margin:0;}
+
+  footer{
+    text-align:center;color:var(--ink-soft);font-size:12.5px;
+    margin-top:20px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <p class="eyebrow">A field guide to what's over your head</p>
+    <h1>Clouds, decoded</h1>
+    <p class="sub">Every cloud in the sky is built from just four Latin words describing its shape and height. Learn those four, and the ten official cloud types basically name themselves.</p>
+  </div>
+
+  <div class="atmos">
+    <p class="atmos-title">The sky in three layers</p>
+
+    <div class="band">
+      <div class="band-label"><b>High</b>6,000m+</div>
+      <div class="band-clouds">
+        <span class="chip" id="chip-cirrus"></span>
+        <span class="chip" id="chip-cirrocumulus"></span>
+        <span class="chip" id="chip-cirrostratus"></span>
+      </div>
+    </div>
+    <div class="band">
+      <div class="band-label"><b>Mid</b>2,000–6,000m</div>
+      <div class="band-clouds">
+        <span class="chip" id="chip-altocumulus"></span>
+        <span class="chip" id="chip-altostratus"></span>
+        <span class="chip" id="chip-nimbostratus"></span>
+      </div>
+    </div>
+    <div class="band">
+      <div class="band-label"><b>Low</b>0–2,000m</div>
+      <div class="band-clouds">
+        <span class="chip" id="chip-stratus"></span>
+        <span class="chip" id="chip-stratocumulus"></span>
+        <span class="chip" id="chip-cumulus"></span>
+      </div>
+    </div>
+    <div class="band">
+      <div class="band-label"><b>Towers through all 3</b>base low, top high</div>
+      <div class="band-clouds">
+        <span class="chip" id="chip-cumulonimbus"></span>
+      </div>
+    </div>
+  </div>
+
+  <section class="block">
+    <div class="block-head">
+      <p class="block-kicker">Part one</p>
+      <h2>The four building blocks</h2>
+      <p class="block-desc">Meteorologists describe every cloud using combinations of these four root words. Learn what each one looks like and means, and you're most of the way to naming any cloud you see.</p>
+    </div>
+
+    <div class="grid4">
+
+      <div class="card">
+        <div class="card-top">
+          <div>
+            <p class="card-name">Cirrus</p>
+            <span class="latin">cirro- = "curl"</span>
+          </div>
+          <div class="card-icon" id="icon-cirrus-big"></div>
+        </div>
+        <p class="desc">Thin, wispy clouds that look like feathers or curls of hair, floating around 6,000m up.</p>
+        <details>
+          <summary>More detail</summary>
+          <p class="more">Cirrus clouds are made almost entirely of ice crystals rather than water droplets, because it's so cold at that height. Strong high-altitude winds stretch them into their curled, streaky shape — sometimes nicknamed "mares' tails". On their own they usually mean fair weather, though a growing number of them can hint that a change is on the way.</p>
+        </details>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div>
+            <p class="card-name">Cumulus</p>
+            <span class="latin">cumulo- = "heap"</span>
+          </div>
+          <div class="card-icon" id="icon-cumulus-big"></div>
+        </div>
+        <p class="desc">Puffy clouds that look like cotton wool or candy floss, usually floating between 300m and 2,000m.</p>
+        <details>
+          <summary>More detail</summary>
+          <p class="more">Cumulus clouds form when warm air near the ground rises, cools, and condenses into a heap. Small, isolated ones on a sunny day are called "fair weather cumulus" — the classic cartoon cloud shape. Given enough heat and moisture, a cumulus cloud can keep growing upward all day until it becomes something much bigger (see cumulonimbus below).</p>
+        </details>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div>
+            <p class="card-name">Stratus</p>
+            <span class="latin">strato- = "layer"</span>
+          </div>
+          <div class="card-icon" id="icon-stratus-big"></div>
+        </div>
+        <p class="desc">Flat, featureless clouds that don't really move, stretching across the whole sky like a blanket on overcast days.</p>
+        <details>
+          <summary>More detail</summary>
+          <p class="more">Stratus forms when a whole layer of air cools and condenses evenly, rather than in separate rising bubbles. It sits low in the sky and can look a lot like fog that never quite reaches the ground. It rarely produces more than a light drizzle, but it's the reason a sky can stay uniformly grey for a whole day.</p>
+        </details>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div>
+            <p class="card-name">Nimbus</p>
+            <span class="latin">nimbo- = "rain"</span>
+          </div>
+          <div class="card-icon" id="icon-nimbus-big"></div>
+        </div>
+        <p class="desc">Not a cloud shape on its own — "nimbus" is added to a cloud's name whenever rain or snow is actually falling from it.</p>
+        <details>
+          <summary>More detail</summary>
+          <p class="more">Unlike the other three, nimbus describes behaviour rather than shape. Attach it to stratus and you get nimbostratus, a steady rain-layer. Attach it to cumulus and you get cumulonimbus, a towering thunderstorm. If you see "nimbus" anywhere in a cloud's name, grab an umbrella.</p>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <p class="block-kicker">Part two</p>
+      <h2>The ten official cloud genera</h2>
+      <p class="block-desc">Weather scientists group almost every cloud in the sky into ten "genera". Most are simply two of the four building blocks stuck together — the name tells you the shape and the height at once.</p>
+    </div>
+
+    <div id="genus-list"></div>
+  </section>
+
+  <footer>Altitudes shown are typical for temperate latitudes like the UK — the same cloud sits lower nearer the poles and higher near the equator.</footer>
+
+</div>
+
+<script>
+/* ---------- Reusable cloud SVG generator ---------- */
+function cloudSVG(type, bgOverride){
+  const svgOpen = `<svg viewBox="0 0 100 68" xmlns="http://www.w3.org/2000/svg">`;
+  const svgClose = `</svg>`;
+
+  // Each type carries its own sky-colour background, so the cloud colour
+  // picked for it is guaranteed to contrast against it (rather than sharing
+  // whatever pale card background happens to sit behind the icon).
+  const defaultBg = {
+    cirrus:'#183256', cirrocumulus:'#183256', cirrostratus:'#22406a',
+    altocumulus:'#4f7699', altostratus:'#5b81a3', nimbostratus:'#37485a',
+    stratus:'#7d92a3', stratocumulus:'#98b2c6', cumulus:'#bfe0f0',
+    cumulonimbus:'#333f4e'
+  };
+  const bg = bgOverride || defaultBg[type];
+  const skyRect = `<rect width="100" height="68" rx="10" fill="${bg}"/>`;
+
+  const shapes = {
+    cirrus: `
+      <g stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.95">
+        <path d="M4,20 C25,9 40,27 62,15 C78,7 90,17 97,13"/>
+        <path d="M2,36 C22,27 38,43 60,32 C77,24 88,34 96,29"/>
+        <path d="M8,52 C26,43 42,56 64,47 C79,41 88,48 94,45"/>
+      </g>`,
+    cirrocumulus: `
+      <g>
+        ${Array.from({length:24}).map((_,i)=>{
+          const x=8+(i%8)*11+ (Math.floor(i/8)%2)*5;
+          const y=14+Math.floor(i/8)*18;
+          const fill = (i%3===0) ? '#dceefc' : '#ffffff';
+          return `<circle cx="${x}" cy="${y}" r="4.6" fill="${fill}"/>`;
+        }).join('')}
+      </g>`,
+    cirrostratus: `
+      <rect x="0" y="0" width="100" height="68" fill="#ffffff" opacity="0.16"/>
+      <g stroke="#ffffff" stroke-width="1" opacity="0.3">
+        <line x1="0" y1="24" x2="100" y2="20"/>
+        <line x1="0" y1="46" x2="100" y2="50"/>
+      </g>
+      <circle cx="62" cy="30" r="11" fill="#ffe9b3"/>
+      <circle cx="62" cy="30" r="18" fill="none" stroke="#ffffff" stroke-width="1.6" opacity="0.75"/>
+      <circle cx="62" cy="30" r="24" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.35"/>`,
+    altocumulus: `
+      <g fill="#ffffff" stroke="#3f6389" stroke-width="1">
+        ${[0,1,2,3,4].map(i=>`<ellipse cx="${14+i*18}" cy="${28+ (i%2)*10}" rx="11" ry="8"/>`).join('')}
+      </g>`,
+    altostratus: `
+      <circle cx="66" cy="26" r="12" fill="#ffffff" opacity="0.55"/>
+      <rect x="2" y="18" width="96" height="32" rx="8" fill="#eef2f6" opacity="0.92"/>`,
+    nimbostratus: `
+      <rect x="3" y="8" width="94" height="30" rx="6" fill="#8fa0af"/>
+      <g stroke="#d7e2ea" stroke-width="2.6" stroke-linecap="round" opacity="0.9">
+        <line x1="20" y1="42" x2="14" y2="60"/>
+        <line x1="38" y1="42" x2="32" y2="60"/>
+        <line x1="56" y1="42" x2="50" y2="60"/>
+        <line x1="74" y1="42" x2="68" y2="60"/>
+      </g>`,
+    stratus: `
+      <rect x="3" y="28" width="94" height="20" rx="4" fill="#eef2f6"/>`,
+    stratocumulus: `
+      <g fill="#ffffff" stroke="#6f8ea3" stroke-width="1">
+        ${[0,1,2,3,4,5].map(i=>`<ellipse cx="${10+i*15}" cy="${34+(i%2)*6}" rx="10" ry="7"/>`).join('')}
+      </g>`,
+    cumulus: `
+      <g fill="#ffffff" stroke="#9dc0d6" stroke-width="1">
+        <circle cx="34" cy="40" r="14"/>
+        <circle cx="52" cy="32" r="18"/>
+        <circle cx="70" cy="40" r="13"/>
+        <rect x="26" y="42" width="52" height="14" rx="7"/>
+      </g>`,
+    cumulonimbus: `
+      <g fill="#e7edf1" stroke="#aebcc7" stroke-width="1">
+        <circle cx="30" cy="46" r="11"/>
+        <circle cx="46" cy="34" r="15"/>
+        <circle cx="62" cy="26" r="13"/>
+        <ellipse cx="70" cy="18" rx="22" ry="8"/>
+        <rect x="22" y="44" width="46" height="12" rx="6"/>
+      </g>
+      <g stroke="#c7d3dc" stroke-width="2.2" stroke-linecap="round">
+        <line x1="34" y1="58" x2="29" y2="66"/>
+        <line x1="50" y1="58" x2="45" y2="66"/>
+      </g>
+      <path d="M56 58 l-5 7 h5 l-6 8" fill="none" stroke="#f2a93c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`
+  };
+
+  return svgOpen + skyRect + shapes[type] + svgClose;
+}
+
+/* small chip icon (label + tiny svg) */
+function chip(id, label, type){
+  const el = document.getElementById(id);
+  el.innerHTML = cloudSVG(type,'#22375c') + `<span>${label}</span>`;
+}
+chip('chip-cirrus','Cirrus','cirrus');
+chip('chip-cirrocumulus','Cirrocumulus','cirrocumulus');
+chip('chip-cirrostratus','Cirrostratus','cirrostratus');
+chip('chip-altocumulus','Altocumulus','altocumulus');
+chip('chip-altostratus','Altostratus','altostratus');
+chip('chip-nimbostratus','Nimbostratus','nimbostratus');
+chip('chip-stratus','Stratus','stratus');
+chip('chip-stratocumulus','Stratocumulus','stratocumulus');
+chip('chip-cumulus','Cumulus','cumulus');
+chip('chip-cumulonimbus','Cumulonimbus','cumulonimbus');
+
+/* big card icons for part one */
+document.getElementById('icon-cirrus-big').innerHTML = cloudSVG('cirrus');
+document.getElementById('icon-cumulus-big').innerHTML = cloudSVG('cumulus');
+document.getElementById('icon-stratus-big').innerHTML = cloudSVG('stratus');
+document.getElementById('icon-nimbus-big').innerHTML = cloudSVG('cumulonimbus');
+
+/* ---------- Ten genera data ---------- */
+const genera = [
+  {
+    name:'Cirrus', type:'cirrus', parts:'cirro- alone', altitude:'High',
+    desc:'Thin, wispy streaks of ice crystal high in the sky. Usually a sign of fair weather.',
+    more:'Cirrus doesn\'t need to combine with anything else — it\'s simply the "curl" shape on its own, at high altitude.'
+  },
+  {
+    name:'Cirrocumulus', type:'cirrocumulus', parts:'cirro- + cumulo-', altitude:'High',
+    desc:'Small, dappled white patches high in the sky, often called a "mackerel sky" because of the fish-scale pattern.',
+    more:'This is the "heap" shape (cumulo-) shrunk down and lifted to cirrus height, so instead of big puffy clouds you get tiny rippled ones. It\'s the least common of the ten genera.'
+  },
+  {
+    name:'Cirrostratus', type:'cirrostratus', parts:'cirro- + strato-', altitude:'High',
+    desc:'A thin, pale sheet of ice cloud that can cover the whole sky, sometimes producing a halo around the sun or moon.',
+    more:'It\'s so thin you can usually still see the sun or moon through it — the ice crystals bend the light into a ring, or "halo". Often a sign that rain or snow will arrive within a day or so.'
+  },
+  {
+    name:'Altocumulus', type:'altocumulus', parts:'alto- + cumulo-', altitude:'Mid',
+    desc:'Grey-white patches or rolls of cloud in the middle of the sky, often in rows.',
+    more:'The "heap" shape again, this time at the mid-level "high" (alto-) altitude. A sky full of altocumulus on a warm, humid morning can be an early warning sign of thunderstorms later that day.'
+  },
+  {
+    name:'Altostratus', type:'altostratus', parts:'alto- + strato-', altitude:'Mid',
+    desc:'A grey or blue-grey sheet covering the sky, through which the sun looks like it\'s behind frosted glass.',
+    more:'Thicker than cirrostratus, so it blurs the sun rather than allowing a sharp halo. It commonly forms ahead of a warm front and can thicken into nimbostratus as rain approaches.'
+  },
+  {
+    name:'Nimbostratus', type:'nimbostratus', parts:'nimbo- + strato-', altitude:'Mid–low',
+    desc:'A thick, dark grey blanket layer that produces steady, continuous rain or snow.',
+    more:'This is the classic "it\'s just going to rain all day" cloud. It\'s thick enough to block out the sun almost completely and can span the low and mid layers at once.'
+  },
+  {
+    name:'Stratocumulus', type:'stratocumulus', parts:'strato- + cumulo-', altitude:'Low',
+    desc:'Low, lumpy grey or white patches or rolls — probably the most common cloud in the sky.',
+    more:'A halfway point between flat stratus and puffy cumulus: individual heaps, but joined together into a low layer. Usually harmless, though it can occasionally produce light rain.'
+  },
+  {
+    name:'Stratus', type:'stratus', parts:'strato- alone', altitude:'Low',
+    desc:'A flat, grey, featureless layer sitting low in the sky, like a blanket or a ceiling of fog.',
+    more:'Stratus is the "layer" shape by itself, at the lowest altitude of all. On the ground it can be indistinguishable from fog — the difference is really just whether the cloud base touches the surface.'
+  },
+  {
+    name:'Cumulus', type:'cumulus', parts:'cumulo- alone', altitude:'Low',
+    desc:'The classic puffy, cotton-wool cloud with a flat base and rounded top.',
+    more:'On its own, cumulus is usually the "fair weather" cloud you\'d draw as a child. Given enough warmth and moisture below it, though, it can keep growing upward into a cumulonimbus.'
+  },
+  {
+    name:'Cumulonimbus', type:'cumulonimbus', parts:'cumulo- + nimbo-', altitude:'Low base, towers to high',
+    desc:'A huge, dark, towering thundercloud with rain, hail or snow falling from it — often flattened into an anvil shape at the top.',
+    more:'This is a cumulus cloud that never stopped growing, punching all the way up through the mid and high layers until it hits the top of the troposphere and spreads out into a flat "anvil". It\'s the cloud responsible for thunder, lightning, heavy rain, hail and even tornadoes.'
+  }
+];
+
+const listEl = document.getElementById('genus-list');
+listEl.innerHTML = genera.map(g => `
+  <div class="genus-row">
+    <div class="genus-icon">${cloudSVG(g.type)}</div>
+    <div>
+      <div class="genus-top">
+        <span class="genus-name">${g.name}</span>
+        <span class="parts">${g.parts}</span>
+        <span class="altitude-tag">${g.altitude}</span>
+      </div>
+      <p class="genus-desc">${g.desc}</p>
+      <details>
+        <summary>More detail</summary>
+        <p class="more">${g.more}</p>
+      </details>
+    </div>
+  </div>
+`).join('');
+</script>
+
+</body>
+</html>
