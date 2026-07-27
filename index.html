@@ -263,12 +263,11 @@
     display:block;font-size:11px;color:var(--ink-soft);font-weight:400;
   }
   .mnemonic-table td{color:var(--ink);font-weight:500;}
-  .mnemonic-table td.muted{color:var(--ink-soft);font-weight:400;font-style:italic;font-size:13px;}
-  .mnemonic-table td.odd-one-out{
+  .mnemonic-table td.extra-cell{
     background:#fff8ec;font-weight:600;
     border-radius:8px;
   }
-  .mnemonic-table td.odd-one-out span{
+  .mnemonic-table td.extra-cell .tag{
     display:block;font-size:11.5px;font-weight:400;color:var(--ink-soft);
   }
   .mnemonic-table tbody tr:last-child td{border-bottom:none;}
@@ -466,7 +465,7 @@
 
     <ol class="tips">
       <li><b>Start with the two shapes and add a height prefix:</b> take cumulo- (puffy) and strato- (layer), then add nothing for low, alto- for mid, or cirro- for high. That gives you cumulus/stratus, altocumulus/altostratus, and cirrocumulus/cirrostratus — six of the ten names, right there.</li>
-      <li><b>Each height also gets a "mixed" cloud</b> — cumulo- and strato- combined into one. At low level that's stratocumulus. At high level, cirrus alone already covers it, so no separate mix is needed. At mid level, the mixed slot is swapped out for nimbostratus (the rain-bearing layer) instead — that's the one exception worth memorising on purpose.</li>
+      <li><b>Each height also gets one "extra" cloud</b> beyond the puffy/layer pair — but it plays a different role at each level. At low level it's stratocumulus, the two genuinely mixed together. At high level it's just cirrus itself, the plain unmixed cloud. At mid level it's nimbostratus, where rain is swapped in instead of a mix — that's the one exception worth memorising on purpose.</li>
       <li><b>Cumulonimbus stands outside the whole system:</b> it starts as a low cumulus cloud, but keeps growing until it towers through the mid and high layers too.</li>
     </ol>
 
@@ -477,7 +476,7 @@
             <th></th>
             <th>Puffy<br><span>cumulo-</span></th>
             <th>Layer<br><span>strato-</span></th>
-            <th>Both mixed together</th>
+            <th>The extra one</th>
           </tr>
         </thead>
         <tbody>
@@ -485,19 +484,19 @@
             <td class="row-label">High<br><span>cirro-</span></td>
             <td>Cirrocumulus</td>
             <td>Cirrostratus</td>
-            <td class="muted">— (cirrus alone covers it)</td>
+            <td class="extra-cell">Cirrus <span class="tag">the plain, unmixed cloud itself</span></td>
           </tr>
           <tr>
             <td class="row-label">Mid<br><span>alto-</span></td>
             <td>Altocumulus</td>
             <td>Altostratus</td>
-            <td class="odd-one-out">Nimbostratus <span>(breaks the pattern — really sits low-to-mid)</span></td>
+            <td class="extra-cell">Nimbostratus <span class="tag">rain swapped in instead of a mix</span></td>
           </tr>
           <tr>
             <td class="row-label">Low<br><span>no prefix</span></td>
             <td>Cumulus</td>
             <td>Stratus</td>
-            <td>Stratocumulus</td>
+            <td class="extra-cell">Stratocumulus <span class="tag">the two mixed together</span></td>
           </tr>
         </tbody>
       </table>
